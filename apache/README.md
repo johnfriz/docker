@@ -4,4 +4,5 @@ This is a working example of mounting an external volume (./apache-www) for the 
 
 Docker Command:
 
-    docker run -p 8080:80 -v $(pwd)/apache-www/:/var/www/ -d eboraas/apache
+    sudo docker run -p 8080:80 -v $(pwd)/apache-www/:/var/www/ -d eboraas/apache
+
