@@ -49,12 +49,14 @@ passport.use(new SamlStrategy(
   },
   function(profile, done) {
     console.log("Auth with", profile);
-    if (!profile.email) {
+    var email = profile.email || profile['urn:oid:1.2.840.113549.1.9.1'];
+
+    if (!email) {
       return done(new Error("No email found"), null);
     }
     // asynchronous verification, for effect...
     process.nextTick(function () {
-      findByEmail(profile.email, function(err, user) {
+      findByEmail(email, function(err, user) {
         if (err) {
           return done(err);
         }
