@@ -1,5 +1,6 @@
 var express = require('express')
   , passport = require('passport')
+  , ejs = require('ejs')
   , util = require('util')
   , SamlStrategy = require('passport-saml').Strategy
   , fs = require('fs');
@@ -67,7 +68,7 @@ passport.use(new SamlStrategy(
   }
 ));
 
-var app = express.createServer();
+var app = express();
 
 // configure Express
 app.configure(function() {

@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "passport": "^0.2.1",
-    "express": "^4.8.8",
-    "passport-saml": "^0.5.2"
+    "express": "~3.2.0",
+    "passport-saml": "^0.5.2",
+    "ejs": "^1.0.0"
   }
 }
