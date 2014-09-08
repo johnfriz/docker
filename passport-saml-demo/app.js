@@ -9,6 +9,7 @@ var express = require('express')
 var users = [
     { id: 1, givenName: 'bob', email: 'bob@example.com' }
   , { id: 2, givenName: 'joe', email: 'joe@example.com' }
+  , { id: 3, givenName: 'John Friz', email: 'john.frizelle@feedhenry.com' }
 ];
 
 function findByEmail(email, fn) {
@@ -107,6 +108,7 @@ app.get('/login',
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
+    console.log('Login Callback - req = ', req);
     res.redirect('/');
   }
 );
