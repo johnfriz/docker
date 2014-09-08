@@ -1,5 +1,5 @@
 {
-  "name": "passport-saml",
+  "name": "passport-saml-demo",
   "version": "0.0.1",
   "description": "",
   "main": "app.js",
@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "passport": "^0.2.1",
-    "express": "^4.8.8"
+    "express": "^4.8.8",
+    "passport-saml": "^0.5.2"
   }
 }
