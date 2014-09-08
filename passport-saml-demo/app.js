@@ -9,6 +9,7 @@ var express = require('express')
 var users = [
     { id: 1, givenName: 'bob', email: 'bob@example.com' }
   , { id: 2, givenName: 'joe', email: 'joe@example.com' }
+  , { id: 3, givenName: 'John Friz', email: 'john.frizelle@feedhenry.com' }
 ];
 
 function findByEmail(email, fn) {
