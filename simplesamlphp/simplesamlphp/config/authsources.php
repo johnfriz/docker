@@ -88,6 +88,12 @@ $config = array(
 			'uid' => array('employee'),
 			'eduPersonAffiliation' => array('member', 'employee'),
 		),
+		'bob:bobpass' => array(
+			'uid' => array('bob'),
+			'eduPersonAffiliation' => array('member', 'student'),
+			'givenName' => 'bob',
+			'email' => 'bob@example.com',
+		),
 	),
 	
 
