@@ -115,7 +115,7 @@ app.get('/login',
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
-    console.log('req.user = ', req.user);
+    console.log('req.user BEFORE processing SAML Resposne : \n', req.user, '\n*******************************');
     //console.log('res = ', res);
     //console.log('req.body = ', req.body);
     //console.log('res.body = ', res.body);
@@ -149,6 +149,9 @@ app.post('/login/callback',
       }
       req.user.SAMLResposeXML = SAMLResposeXML;
       req.user.SAMLAttributes = SAMLAttributes;
+
+      console.log('req.user AFTER processing SAML Resposne : \n', req.user, '\n*******************************');
+
       res.redirect('/');
     });
   }
