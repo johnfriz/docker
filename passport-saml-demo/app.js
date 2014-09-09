@@ -108,7 +108,42 @@ app.get('/login',
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
-    res.redirect('/');
+
+    var resStr = res.body;
+    var resJSON = JSON.parse(resStr);
+    var SAMLResponseB64 = resJSON.SAMLResponse;
+
+    var buf = new Buffer(SAMLResponseB64, 'base64');
+
+    var SAMLResposeXML = buf.toString();
+    var SAMLAttributes = [];
+
+    var resObj = {'xml' : SAMLResposeXML, attributes : SAMLAttributes};
+
+    parseString(SAMLResposeXML, function (err, result) {
+      if( result['samlp:Response'] ) {
+        var SAMLResposeJSON = result['samlp:Response'];
+        if(SAMLResposeJSON['saml:Assertion'] ) {
+          var SAMLAssertions = SAMLResposeJSON['saml:Assertion'];
+          if( SAMLAssertions.length > 0 ) {
+            var SAMLAssertion = SAMLResposeJSON['saml:Assertion'][0];
+            if(SAMLAssertion['saml:AttributeStatement'] ) {
+              var SAMLAttributeStatements = SAMLAssertion['saml:AttributeStatement'][0]['saml:Attribute'];
+              for(var i=0; i<SAMLAttributeStatements.length; i++) {
+                var SAMLAttributeStatement = SAMLAttributeStatements[i];
+                var SAMLAttributeValue = SAMLAttributeStatement['saml:AttributeValue'];
+                SAMLAttributes.push(SAMLAttributeValue[0]['_']);
+              }
+            }
+          }
+        }
+      }
+
+      console.log('resObj :: ', resObj);
+
+      //res.redirect('/');
+      res.render('user', resObj);
+    });
   }
 );
 
