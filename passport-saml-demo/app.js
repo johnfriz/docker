@@ -3,8 +3,8 @@ var express = require('express')
   , ejs = require('ejs')
   , util = require('util')
   , SamlStrategy = require('passport-saml').Strategy
-  , fs = require('fs');
-  
+  , fs = require('fs')
+  , parseString = require('xml2js').parseString; 
 
 var users = [
     { id: 1, givenName: 'bob', email: 'bob@example.com' }
@@ -108,8 +108,13 @@ app.get('/login',
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
-    var resStr = res.body;
-    var resJSON = JSON.parse(resStr);
+    //console.log('req = ', req);
+    //console.log('res = ', res);
+    //console.log('req.body = ', req.body);
+    //console.log('res.body = ', res.body);
+
+    var resStr = req.body;
+    var resJSON = req.body; //JSON.parse(resStr);
     var SAMLResponseB64 = resJSON.SAMLResponse;
 
     var buf = new Buffer(SAMLResponseB64, 'base64');
