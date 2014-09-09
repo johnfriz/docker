@@ -108,7 +108,6 @@ app.get('/login',
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
-
     var resStr = res.body;
     var resJSON = JSON.parse(resStr);
     var SAMLResponseB64 = resJSON.SAMLResponse;
