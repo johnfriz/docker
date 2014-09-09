@@ -101,8 +101,8 @@ app.get('/', function(req, res){
   res.render('index', { user: req.user, page: req.path});
 });
 
-app.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user, page: req.path});
+app.get('/salesforce', ensureAuthenticated, function(req, res){
+  res.render('salesforce', { user: req.user, page: req.path});
 });
 
 app.get('/login',
