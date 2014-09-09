@@ -33,7 +33,7 @@
               <a href="/salesforce">Salesforce Website</a>
             </li>
             <li <%- page === '/logout' ? 'class="active"' : '' %>>
-              <a href="/logout">Log Out</a>
+              <a id="logoutLink">Log Out</a>
             </li>
             <% } %>
           </ul>
@@ -47,5 +47,10 @@
       </div>
       <%- body %>
     </div>
+
+    <script>
+      $('#logoutLink').attr("href", "http://saml-idp.jfrizelle.ofoghlu.net/simplesaml/saml2/idp/SingleLogoutService.php?ReturnTo=" + window.location.origin);
+    </script>
+
   </body>
 </html>
