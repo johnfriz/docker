@@ -147,10 +147,10 @@ app.post('/login/callback',
           }
         }
       }
+      req.user.SAMLResposeXML = SAMLResposeXML;
+      req.user.SAMLAttributes = SAMLAttributes;
+      res.redirect('/');
     });
-    req.user.SAMLResposeXML = SAMLResposeXML;
-    req.user.SAMLAttributes = SAMLAttributes;
-    res.redirect('/');
   }
 );
 
