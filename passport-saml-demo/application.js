@@ -129,10 +129,6 @@ app.post('/login/callback',
     var SAMLResposeXML = buf.toString();
     var SAMLAttributes = [];
 
-    //var resObj = {'xml' : SAMLResposeXML, attributes : SAMLAttributes};
-
-    var email = undefined;
-
     parseString(SAMLResposeXML, function (err, result) {
       if( result['samlp:Response'] ) {
         var SAMLResposeJSON = result['samlp:Response'];
@@ -142,29 +138,19 @@ app.post('/login/callback',
             var SAMLAssertion = SAMLResposeJSON['saml:Assertion'][0];
             if(SAMLAssertion['saml:AttributeStatement'] ) {
               var SAMLAttributeStatements = SAMLAssertion['saml:AttributeStatement'][0]['saml:Attribute'];
-              
-              async.each(SAMLAttributeStatements, function(SAMLAttributeStatement, asyncCb) {
-                var SAMLAttributename = SAMLAttributeStatement['$']['Name'];
-                if( SAMLAttributename == 'email' || SAMLAttributename == "urn:oid:1.3.6.1.4.1.5923.1.1.1.1") {
-                  var email = SAMLAttributeStatement['saml:AttributeValue'];
-                  findByEmail(email, function(err, user) {
-                    if (! err && user) {
-                      user.SAMLResposeXML = SAMLResposeXML;
-                    }
-                    asyncCb();
-                  });
-                }
-                else {
-                  asyncCb();
-                }
-              }, function(err){
-                res.redirect('/');
-              });
+              for(var i=0; i<SAMLAttributeStatements.length; i++) {
+                var SAMLAttributeStatement = SAMLAttributeStatements[i];
+                var SAMLAttributeValue = SAMLAttributeStatement['saml:AttributeValue'];
+                SAMLAttributes.push(SAMLAttributeValue[0]['_']);
+              }
             }
           }
         }
       }
     });
+    req.user.SAMLResposeXML = SAMLResposeXML;
+    req.user.SAMLAttributes = SAMLAttributes;
+    res.redirect('/');
   }
 );
 
