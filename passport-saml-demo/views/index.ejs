@@ -1,5 +1,17 @@
+<% layout('layout') -%>
 <% if (!user) { %>
-<h2>Welcome! Please <a href="/login">log in</a>.</h2>
+<h2>Please log in.</h2>
 <% } else { %>
-<h2>Hello, <%= user.givenName %>.</h2>
+
+<h2>You are now logged in.</h2>
+
+<h3>Hello, <%= user.givenName %>.</h2>
+
+<h3> User Attributes </h3>
+
+<%=user.attributes%>
+
+<h3> SAML Response </h3>
+
+<textarea style="margin: 2px; height: 500px; width: 95%;"><%=user.xml%></textarea>
 <% } %>
